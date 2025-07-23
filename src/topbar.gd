@@ -8,7 +8,7 @@ extends PanelContainer
 
 
 onready var app=get_tree().root.get_node("app")
-
+onready var actions=get_tree().root.get_node("actions")
 onready var grid=app.get_node("grid")
 onready var reference_image=app.get_node("canvas/reference_image")
 
@@ -16,6 +16,7 @@ onready var menu_btn_file=get_node("container/btn_file")
 onready var menu_btn_edit=get_node("container/btn_edit")
 onready var menu_btn_view=get_node("container/btn_view")
 onready var menu_btn_help=get_node("container/btn_help")
+onready var menu_btn_mirror=get_node("container/btn_mirror")
 
 onready var open_file_dialog=get_node("%open_file_dialog")
 onready var save_file_dialog=get_node("%save_file_dialog")
@@ -77,8 +78,14 @@ func _ready():
 	menu_btn_help.get_popup().add_item("About")
 	menu_btn_help.get_popup().connect("id_pressed",self,"on_help_menu_item_pressed")
 	
-	
+	menu_btn_mirror.get_popup().add_separator("Mirror",-1)
 
+	menu_btn_mirror.get_popup().add_check_item("Mirror X",1)
+	menu_btn_mirror.get_popup().set_item_checked(1,false)
+	menu_btn_mirror.get_popup().add_check_item("Mirror Y",2)
+	menu_btn_mirror.get_popup().set_item_checked(2,false)
+	menu_btn_mirror.get_popup().connect("id_pressed",self,"on_mirror_menu_item_pressed")
+	menu_btn_mirror.connect("about_to_show",self,"on_mirror_menu_open")
 	
 	pass # Replace with function body.
 
@@ -135,7 +142,7 @@ func on_edit_menu_item_pressed(id:int):
 func on_view_menu_item_pressed(id:int):
 	var popup=menu_btn_view.get_popup()
 	var item_name=popup.get_item_text(id)
-	
+
 	if popup.is_item_checked(id) :
 		popup.set_item_checked(id,false)
 	else:
@@ -162,6 +169,21 @@ func on_view_menu_item_pressed(id:int):
 		app.show_springs=popup.is_item_checked(id)
 	elif item_name=="Show Particles" :
 		app.show_particles=popup.is_item_checked(id)
+	pass
+	
+func on_mirror_menu_item_pressed(id:int):
+	var popup=menu_btn_mirror.get_popup()
+	var item_name=popup.get_item_text(id)
+
+	if popup.is_item_checked(id) :
+		popup.set_item_checked(id,false)
+	else:
+		popup.set_item_checked(id,true)
+		
+	if item_name=="Mirror X" :
+		app.MirrorCheckedX = popup.is_item_checked(id)
+	elif item_name=="Mirror Y" :
+		app.MirrorCheckedY = popup.is_item_checked(id)
 	pass
 	
 func on_help_menu_item_pressed(id:int):

@@ -187,6 +187,15 @@ enabled_focus_mode = 0
 group = ExtResource( 4 )
 text = "Help"
 
+[node name="btn_mirror" type="MenuButton" parent="CanvasLayer/gui/topbar/container"]
+margin_left = 224.0
+margin_right = 286.0
+margin_bottom = 25.0
+theme = ExtResource( 2 )
+enabled_focus_mode = 0
+group = ExtResource( 4 )
+text = "Mirror"
+
 [node name="middle_side" type="HBoxContainer" parent="CanvasLayer/gui"]
 margin_top = 53.0
 margin_right = 1024.0
@@ -675,7 +684,7 @@ margin_right = 284.0
 margin_bottom = 171.5
 theme = ExtResource( 2 )
 popup_exclusive = true
-window_title = "Open a File"
+window_title = "Ouvrir un fichier"
 resizable = true
 mode = 0
 access = 2
@@ -878,7 +887,7 @@ margin_right = 284.0
 margin_bottom = 171.5
 theme = ExtResource( 2 )
 popup_exclusive = true
-window_title = "Open a File"
+window_title = "Ouvrir un fichier"
 resizable = true
 mode = 0
 access = 2

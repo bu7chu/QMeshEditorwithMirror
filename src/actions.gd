@@ -5,6 +5,9 @@ onready var app=get_tree().root.get_node("app")
 
 
 #ACTIONS
+
+
+
 func set_particle_positions(target_mesh:mesh_node,particle_index_list:Array,particle_position_list:Array) ->bool:
 	target_mesh.set_particle_positions(particle_index_list,particle_position_list)
 	app.highlight_selected_particles_with_guides()
@@ -30,14 +33,17 @@ func set_particle_internal_values(target_mesh:mesh_node,particle_index_list:Arra
 		var value=internal_values_list[i]
 		var particle=target_mesh.particles[index]
 		particle.enable_internal=value
+		
 	target_mesh.update()
 	app.update_canvas()
 	app.is_file_changed=true
+	
 	return true
 	
 func insert_particle(target_mesh:mesh_node,particle:mesh_node.particle,particle_position_index:int=-1) ->bool:
 	if particle_position_index>-1 :
 		target_mesh.particles.insert(particle_position_index,particle)
+		
 		for s in target_mesh.springs :
 			if s[0]>=particle_position_index:
 				s[0]=(s[0]+1)%target_mesh.particles.size()
@@ -55,14 +61,20 @@ func insert_particle(target_mesh:mesh_node,particle:mesh_node.particle,particle_
 				
 	else :
 		target_mesh.particles.append(particle)
+		
+		
 	target_mesh.update()
 	app.update_canvas()
 	app.is_file_changed=true
+	
+	print(particle.position)
+	print(target_mesh.particles)
 	return true
 	
 func insert_particles(target_mesh:mesh_node,particles:Array,particles_position_indexes:Array) ->bool:
 	for i in range(particles.size()) :
 		insert_particle(target_mesh,particles[i],particles_position_indexes[i])
+		print(target_mesh)
 	return true
 	
 func reverse_mesh(target_mesh:mesh_node,particles:Array,springs:Array,internal_springs:Array,polygons:Array)->bool:

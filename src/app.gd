@@ -65,7 +65,8 @@ onready var ur_manager:undoredo_manager=get_node("/root/app/undoredo_manager")
 
 #drawing editor guide shapes
 onready var guides:guides=get_node("canvas/guides")
-
+onready var MirrorCheckedX = false
+onready var MirrorCheckedY = false
 #tool option nodes
 onready var options_selected_particles=get_node("%options_selected_particles")
 onready var options_particle=get_node("%options_particle")
@@ -369,14 +370,43 @@ func on_left_click_mode_particle() :
 		return
 	var target_mesh:mesh_node=last_selected_mesh_item.get_metadata(0)
 	var target_position=get_global_mouse_position()
+	var target_position2= Vector2(-target_position.x,target_position.y)
+	var target_position3= Vector2(target_position.x,-target_position.y)
+	var target_position4= Vector2(-target_position.x,-target_position.y)
+	
+	print(target_position.x)
 	if snap_to_grid:
 		target_position=snapped_position(target_position)
-	
 	var p=target_mesh.create_particle(clear_extra_decimals(target_mesh.to_local(target_position ) ),options_particle.value_radius.value,options_particle.value_internal.pressed)
+	var p2=target_mesh.create_particle(clear_extra_decimals(target_mesh.to_local(target_position2 ) ),options_particle.value_radius.value,options_particle.value_internal.pressed)
+	var p3=target_mesh.create_particle(clear_extra_decimals(target_mesh.to_local(target_position3 ) ),options_particle.value_radius.value,options_particle.value_internal.pressed)
+	var p4=target_mesh.create_particle(clear_extra_decimals(target_mesh.to_local(target_position4 ) ),options_particle.value_radius.value,options_particle.value_internal.pressed)
+	
 	$actions.insert_particle(target_mesh,p)
 	var redo_action=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"insert_particle",[target_mesh,p,target_mesh.particles.size()-1])
 	var undo_action=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"remove_particle",[target_mesh,p.id])
+	
+	if MirrorCheckedX:
+		print("yes")
+		$actions.insert_particle(target_mesh,p2)
+	var redo_action2=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"insert_particle",[target_mesh,p2,target_mesh.particles.size()-1])
+	var undo_action2=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"remove_particle",[target_mesh,p2.id])
+	if MirrorCheckedY:
+		print("yesyes")
+		$actions.insert_particle(target_mesh,p3)
+	var redo_action3=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"insert_particle",[target_mesh,p3,target_mesh.particles.size()-1])
+	var undo_action3=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"remove_particle",[target_mesh,p3.id])
+	
+	if MirrorCheckedX and MirrorCheckedY:
+		print("yesyesyes")
+		$actions.insert_particle(target_mesh,p4)
+	var redo_action4=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"insert_particle",[target_mesh,p4,target_mesh.particles.size()-1])
+	var undo_action4=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"remove_particle",[target_mesh,p4.id])
+	
 	ur_manager.add_undoredo(undo_action,redo_action)
+	ur_manager.add_undoredo(undo_action2,redo_action2)
+	ur_manager.add_undoredo(undo_action3,redo_action3)
+	ur_manager.add_undoredo(undo_action4,redo_action4)
 func on_left_click_mode_spring() :
 	if is_there_a_mesh()==false :
 		return
