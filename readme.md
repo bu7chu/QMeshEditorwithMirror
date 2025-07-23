@@ -4,19 +4,7 @@ You can create and edit qmesh files and you can load and use these files with Qu
 
 [QuarkPhysics Project Page](https://github.com/erayzesen/QuarkPhysics)
 
+The Project was created by ErayZesen.
 
-![screenshot](images/screenshot_app.png)
-
-## Features
-* Add/Remove/Edit mesh layers
-* Add/Remove/Edit particles
-* Add/Remove/Edit springs
-* Add/Remove/Edit polygon
-
-## Build project
-- Download project
-- Open with Godot Engine v3.x.  
-- Build to any platform. 
-
-
+Here's a branch where I added a Mirroring for simpler qmesh creations.
 
