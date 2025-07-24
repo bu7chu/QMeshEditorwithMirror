@@ -389,24 +389,23 @@ func on_left_click_mode_particle() :
 	if MirrorCheckedX:
 		print("yes")
 		$actions.insert_particle(target_mesh,p2)
-	var redo_action2=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"insert_particle",[target_mesh,p2,target_mesh.particles.size()-1])
-	var undo_action2=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"remove_particle",[target_mesh,p2.id])
+		var redo_action2=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"insert_particle",[target_mesh,p2,target_mesh.particles.size()-1])
+		var undo_action2=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"remove_particle",[target_mesh,p2.id])
+		ur_manager.add_undoredo(undo_action2,redo_action2)
 	if MirrorCheckedY:
 		print("yesyes")
 		$actions.insert_particle(target_mesh,p3)
-	var redo_action3=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"insert_particle",[target_mesh,p3,target_mesh.particles.size()-1])
-	var undo_action3=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"remove_particle",[target_mesh,p3.id])
-	
+		var redo_action3=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"insert_particle",[target_mesh,p3,target_mesh.particles.size()-1])
+		var undo_action3=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"remove_particle",[target_mesh,p3.id])
+		ur_manager.add_undoredo(undo_action3,redo_action3)
 	if MirrorCheckedX and MirrorCheckedY:
 		print("yesyesyes")
 		$actions.insert_particle(target_mesh,p4)
-	var redo_action4=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"insert_particle",[target_mesh,p4,target_mesh.particles.size()-1])
-	var undo_action4=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"remove_particle",[target_mesh,p4.id])
-	
+		var redo_action4=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"insert_particle",[target_mesh,p4,target_mesh.particles.size()-1])
+		var undo_action4=undoredo_manager.create_action($actions,undoredo_manager.action_types.CALL,"remove_particle",[target_mesh,p4.id])
+		ur_manager.add_undoredo(undo_action4,redo_action4)	
 	ur_manager.add_undoredo(undo_action,redo_action)
-	ur_manager.add_undoredo(undo_action2,redo_action2)
-	ur_manager.add_undoredo(undo_action3,redo_action3)
-	ur_manager.add_undoredo(undo_action4,redo_action4)
+
 func on_left_click_mode_spring() :
 	if is_there_a_mesh()==false :
 		return
